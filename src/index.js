@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import '/home/uki-student/Documents/fresh/frontend/myproject/src/index.js';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

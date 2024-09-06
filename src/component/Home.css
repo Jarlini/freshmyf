@@ -1,0 +1,42 @@
+/* src/styles/styles.css */
+.photo-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .photo-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .section-heading {
+    font-size: 24px;
+    color: orange;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .photo-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  .photo {
+    width: 100%;
+    height: auto; /* Adjust if needed */
+    object-fit: cover;
+  }
+  
+  .view-more-btn {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+  }
+  

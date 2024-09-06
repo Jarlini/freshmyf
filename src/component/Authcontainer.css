@@ -1,0 +1,134 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa; /* Light teal background for the page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Form Container */
+.form-box {
+    align-items: center;
+    background-color: #ffffff; /* White background for the form */
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Slightly darker shadow for a more pronounced floating effect */
+    padding: 40px;
+    width: 400px; /* Increased width for a bigger form */
+    text-align: center;
+    position: relative; /* To position the close button */
+}
+
+/* Close Button */
+.close-button {
+    background: none;
+    border: none;
+    color: #ff6347; /* Coral color for the close button */
+    font-size: 28px; /* Larger font size for the close button */
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+/* Form Elements */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Increased gap between form elements */
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: #00796b; /* Teal color for labels */
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    padding: 12px;
+    border: 2px solid #00bcd4; /* Teal border for input fields */
+    border-radius: 8px; /* Rounded corners */
+    outline: none;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #004d40; /* Darker teal on focus */
+}
+
+button {
+    background-color: #00bcd4; /* Teal background for the button */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 12px;
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 18px; /* Larger font size for the button */
+}
+
+button:hover {
+    background-color: #0097a7; /* Darker teal on hover */
+}
+
+/* Error Message */
+p {
+    color: #ff6347; /* Coral color for error messages */
+    margin-top: 10px;
+}
+/* src/component/Authcontainer.css */
+
+
+.form-container {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sign-in-form, .sign-up-form {
+    width: 100%;
+}
+
+.sign-in-mode .sign-up-form {
+    display: none;
+}
+
+.sign-up-mode .sign-in-form {
+    display: none;
+}
+
+.toggle-link {
+    cursor: pointer;
+    color: #007bff;
+}
+.toggle-text {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.toggle-text a {
+    color: teal; /* Or another color to match your theme */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.toggle-text a:hover {
+    text-decoration: underline;
+}
+.Toastify__toast--success {
+    background-color: teal;
+}
+
+.Toastify__toast--error {
+    background-color: red;
+}
+.toggle-text2 a {
+    color: blue; /* Blue color for the link */
+    text-decoration: underline; /* Underline the link */
+    cursor:hand ; /* Pointer cursor on hover */
+}

@@ -49,7 +49,7 @@ body {
 }
 
 .nav-button:hover {
-  background-color: darkorange; /* Changes background color on hover */
+  background-color:  #f5a623; /* Changes background color on hover */
   color: white; /* Changes text color on hover */
 }
 

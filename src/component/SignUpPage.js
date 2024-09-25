@@ -3,9 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Authcontainer.css';  // Adjust the path based on your folder structure
-
-axios.defaults.baseURL = 'http://localhost:5000';  // Ensure correct backend URL
+import './Authcontainer.css';
+import pic from '/home/uki-student/Documents/fresh/frontend/myproject/src/component/photos/Screenshot from 2024-09-09 11-24-59.png';
+axios.defaults.baseURL = 'http://localhost:5000';
 
 function SignUpPage() {
     const [username, setUsername] = useState('');
@@ -17,6 +17,7 @@ function SignUpPage() {
         e.preventDefault();
         try {
             const response = await axios.post('/api/auth/register', { username, email, password });
+            console.log(response);  // Ensure successful registration response
             localStorage.setItem('token', response.data.token);
 
             toast.success('Registration Successful! Please Sign In...', {
@@ -25,11 +26,13 @@ function SignUpPage() {
                 theme: "colored",
             });
 
-            // Redirect to Sign In page after successful registration
-            navigate('/auth/signin');
+            setTimeout(() => {
+                navigate('/auth/signin');  // Delayed navigation
+            }, 1000);
         } catch (err) {
-            console.error('Error:', err.response?.data || err.message);
-            toast.error(err.response?.data?.message || 'Registration failed', {
+            const errorMessage = err.response?.data?.message || 'Registration failed. Please try again.';
+            console.error('Error:', errorMessage);
+            toast.error(errorMessage, {
                 position: "top-right",
                 autoClose: 5000,
                 theme: "colored",
@@ -39,8 +42,11 @@ function SignUpPage() {
 
     return (
         <div className="auth-page">
-            <div className="form-container">
-                <div className="form-box">
+            <div className="container">
+                <div className="left-div">
+                    <img src={pic} alt="Decorative" />
+                </div>
+                <div className="right-div">
                     <h1>Create Account</h1>
                     <form onSubmit={handleSignUp}>
                         <input
@@ -70,11 +76,11 @@ function SignUpPage() {
                         <button type="submit">Sign Up</button>
                     </form>
                     <p className="toggle-text">
-                        Already have an account? <a href="/auth/signin">Sign In</a>
+                        Already  have an account? <a href="/auth/signin">Sign In</a>
                     </p>
                 </div>
-                <ToastContainer />
             </div>
+            <ToastContainer />
         </div>
     );
 }

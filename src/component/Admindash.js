@@ -1,97 +1,99 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import api from './Api';
+import ManageGroups from './M.group';
+import AddService from './Home';
+import ItemForm from './Itemform';
+import MHome from './Mhome';
+import MUser from './M.user';
+import MPackage from './Mpackege';
+import MOrder from './Morder'; // Import the new MOrder component
+
+import "/home/uki-student/Documents/fresh/frontend/myproject/src/component/Style.css";
 
 const AdminDashboard = () => {
-    const [group1Users, setGroup1Users] = useState([]);
-    const [group2Users, setGroup2Users] = useState([]);
-    const [group3Users, setGroup3Users] = useState([]);
-    const [allUsers, setAllUsers] = useState([]);
-    const [selectedGroup, setSelectedGroup] = useState(null);
+  const [activeSection, setActiveSection] = useState('');
+  const [data, setData] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-    const fetchGroupUsers = async (group) => {
-        try {
-            const { data } = await axios.get(`/api/admin/${group}`);
-            switch (group) {
-                case 'group1':
-                    setGroup1Users(data);
-                    setSelectedGroup('group1');
-                    break;
-                case 'group2':
-                    setGroup2Users(data);
-                    setSelectedGroup('group2');
-                    break;
-                case 'group3':
-                    setGroup3Users(data);
-                    setSelectedGroup('group3');
-                    break;
-                case 'all':
-                    setAllUsers(data);
-                    setSelectedGroup('all');
-                    break;
-                default:
-                    break;
-            }
-        } catch (error) {
-            console.error('Error fetching users:', error);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response;
+        switch (activeSection) {
+          case 'users':
+            response = await api.get('/users');
+            break;
+          case 'trips':
+            response = await api.get('/trips');
+            break;
+          case 'packages':
+            response = await api.get('/packages');
+            break;
+          case 'groups':
+            response = await api.get('/groups');
+            break;
+          case 'orders': // Adding case for orders
+            response = await api.get('/orders'); // Fetch orders if needed
+            break;
+          default:
+            return;
         }
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
-    return (
-        <div style={{ backgroundColor: '#B2DFDB', padding: '20px', minHeight: '100vh' }}>
-            <h1 style={{ color: 'orange', textAlign: 'center' }}>Admin Dashboard</h1>
+    if (activeSection) {
+      fetchData();
+    }
+  }, [activeSection]);
 
-            <form style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
-                <button
-                    type="button"
-                    onClick={() => fetchGroupUsers('group1')}
-                    style={{ margin: '10px', backgroundColor: 'orange', color: 'white', padding: '4px 8px', fontSize: '12px', fontWeight: '300' }}
-                >
-                    Group 1
-                </button>
-                <button
-                    type="button"
-                    onClick={() => fetchGroupUsers('group2')}
-                    style={{ margin: '10px', backgroundColor: 'orange', color: 'white', padding: '4px 8px', fontSize: '12px', fontWeight: '300' }}
-                >
-                    Group 2
-                </button>
-                <button
-                    type="button"
-                    onClick={() => fetchGroupUsers('group3')}
-                    style={{ margin: '10px', backgroundColor: 'orange', color: 'white', padding: '4px 8px', fontSize: '12px', fontWeight: '300' }}
-                >
-                    Group 3
-                </button>
-                <button
-                    type="button"
-                    onClick={() => fetchGroupUsers('all')}
-                    style={{ margin: '10px', backgroundColor: 'orange', color: 'white', padding: '4px 8px', fontSize: '12px', fontWeight: '300' }}
-                >
-                    All Users
-                </button>
-            </form>
+  const handleItemSelect = (item) => {
+    setSelectedItem(item);
+  };
 
-            {selectedGroup && (
-                <div style={{ margin: '20px 0' }}>
-                    <h2 style={{ color: 'orange' }}>{`Details of ${selectedGroup}`}</h2>
-                    <ul>
-                        {selectedGroup === 'group1' && group1Users.map(user => (
-                            <li key={user._id}>{user.username} - {user.email}</li>
-                        ))}
-                        {selectedGroup === 'group2' && group2Users.map(user => (
-                            <li key={user._id}>{user.username} - {user.email}</li>
-                        ))}
-                        {selectedGroup === 'group3' && group3Users.map(user => (
-                            <li key={user._id}>{user.username} - {user.email}</li>
-                        ))}
-                        {selectedGroup === 'all' && allUsers.map(user => (
-                            <li key={user._id}>{user.username} - {user.email}</li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </div>
-    );
+  return (
+    <div className="admin-dashboard">
+      <div className="sidebar">
+        <h2>Admin Dashboard</h2>
+        <ul>
+          <li onClick={() => setActiveSection('users')}>Manage Users</li>
+          <li onClick={() => setActiveSection('trips')}>Manage Trips</li>
+          <li onClick={() => setActiveSection('packages')}>Manage Packages</li>
+          <li onClick={() => setActiveSection('groups')}>Manage Groups</li>
+          <li onClick={() => setActiveSection('addService')}>Add New Service</li>
+          <li onClick={() => setActiveSection('orders')}>Manage Orders</li> {/* Updated to Manage Orders */}
+        </ul>
+      </div>
+      <div className="content">
+        {activeSection === 'overview' && (
+          <>
+            <h1>Welcome to the Admin Dashboard</h1>
+            <p style={{ 
+              color: '#004d40', 
+              fontSize: '18px', 
+              fontWeight: 'bold', 
+              marginBottom: '20px' 
+            }}>
+              Welcome to the admin dashboard! Here you can manage trips, packages, users, and more.
+            </p>
+          </>
+        )}
+        {activeSection === 'users' && <MUser />}
+        {activeSection === 'trips' && <MHome />} {/* Include MHome for trip management */}
+        {activeSection === 'packages' && <MPackage />}
+        {activeSection === 'groups' && (
+          <>
+            <ManageGroups data={data} onSelectItem={handleItemSelect} />
+            {selectedItem && <ItemForm item={selectedItem} type="group" />}
+          </>
+        )}
+        {activeSection === 'addService' && <AddService />}
+        {activeSection === 'orders' && <MOrder />} {/* Render the MOrder component */}
+      </div>
+    </div>
+  );
 };
 
 export default AdminDashboard;
